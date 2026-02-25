@@ -351,6 +351,7 @@ class StorageCollector:
         except Exception as e:
             logger.error(f"Error getting hardware processes: {e}")
             return None
+        
     def get_dhtxx_reading(self) -> Optional[dict]:
         """Get current reading from DHTxx sensor if configured"""
         if not self.dhtxx_sensor:

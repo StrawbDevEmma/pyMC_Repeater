@@ -39,7 +39,7 @@ dependencies = [
     "psutil>=5.9.0",
     "pyjwt>=2.8.0",
     "ws4py>=0.6.0",
-    "adafruit-circuitpython-dht>=4.0.10",
+    "pigpio-dht>=0.3.6",
 ]
 
 

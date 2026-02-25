@@ -587,6 +587,37 @@ paths:
                 $ref: '#/components/schemas/SuccessResponse'
 
   # ============================================================================
+  # Sensor Endpoints
+  # ============================================================================
+    /dhtxx_sensor_reading:
+      get:
+        tags: [Sensors]
+        summary: Get DHTxx sensor reading
+        description: Retrieve current temperature and humidity from DHT11/DHT22 sensor
+        responses:
+          '200':
+            description: Sensor reading
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+                    data:
+                      type: object
+                      properties:
+                        temp_c:
+                          type: integer
+                          description: Temperature in Celsius
+                        temp_f:
+                          type: float
+                          description: Temperature in Fahrenheit
+                        humidity:
+                          type: integer
+                          description: Relative humidity percentage
+
+  # ============================================================================
   # Packet Endpoints
   # ============================================================================
   /recent_packets:
