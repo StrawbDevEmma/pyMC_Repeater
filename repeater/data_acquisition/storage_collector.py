@@ -73,7 +73,7 @@ class StorageCollector:
             try:
                 from .dhtxx_sensor import DHTxxSensorCollector
 
-                self.dhtxx_sensor = DHTxxSensorCollector(config.get("dhtxx_sensor", {}))
+                self.dhtxx_sensor = DHTxxSensorCollector(self.config.get("dhtxx_sensor", {}))
                 logger.info("DHTxx sensor collector initialized")
             except Exception as e:
                 logger.error(f"Failed to initialize DHTxx sensor collector: {e}")
