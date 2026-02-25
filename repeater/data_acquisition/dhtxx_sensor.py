@@ -20,8 +20,8 @@ class DHTxxSensorCollector:
 
     def _init_sensor(self): 
         if not DHT11_AVAILABLE:
-            logger.error("pigpio_dht library not available - cannot read DHTxx sensor")
-            return {"error": "pigpio_dht library not available - cannot read DHTxx sensor"}
+            logger.error("dht11 library not available - cannot read DHTxx sensor")
+            return {"error": "dht11 library not available - cannot read DHTxx sensor"}
     
         self.sensor = dht11.DHT11(pin = self.pin)
         logger.info(f"DHTxx sensor initialized on pin {self.pin}")

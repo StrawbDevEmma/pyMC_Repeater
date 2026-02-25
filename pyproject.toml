@@ -39,7 +39,7 @@ dependencies = [
     "psutil>=5.9.0",
     "pyjwt>=2.8.0",
     "ws4py>=0.6.0",
-    "pigpio-dht>=0.3.6",
+    "dht11>=0.1.0",
 ]
 
 
