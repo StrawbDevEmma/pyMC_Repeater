@@ -12,7 +12,7 @@ logger = logging.getLogger("DHTxxSensor")
 
 class DHTxxSensorCollector:
 
-    def __init__(self, dht_config: dict):
+    def __init__(self, dht_config: dict,):
         if not adafruit_dht_AVAILABLE:
             logger.error("adafruit_dht library not available - cannot read DHTxx sensor")
             return {"error": "adafruit_dht library not available - cannot read DHTxx sensor"}
