@@ -13,25 +13,28 @@ logger = logging.getLogger("DHTxxSensor")
 
 class DHTxxSensorCollector:
 
-    def __init__(self, dht_config: dict,):
+    def __init__(self, dht_config: dict):
+        self.sensor_type = dht_config.get("type")
+        self.pin = dht_config.get("pin") 
+        self.sensor = None
+        self._init_sensor()
+
+    def _init_sensor(self): 
         if not pigpio_dht_AVAILABLE:
             logger.error("pigpio_dht library not available - cannot read DHTxx sensor")
             return {"error": "pigpio_dht library not available - cannot read DHTxx sensor"}
 
-        sensor_type = dht_config.get("type")
-        pin = dht_config.get("pin")
-
-        if sensor_type not in [11, 22]:
+        if self.sensor_type not in [11, 22]:
             logger.error(
-                f"Unsupported sensor type: {sensor_type}. Only DHT11 and DHT22 are supported."
+                f"Unsupported sensor type: {self.sensor_type}. Only DHT11 and DHT22 are supported."
             )
             return {
-                "error": f"Unsupported sensor type: {sensor_type}. Only DHT11 and DHT22 are supported."
+                "error": f"Unsupported sensor type: {self.sensor_type}. Only DHT11 and DHT22 are supported."
             }
-        elif sensor_type == 11:
-            self.sensor = DHT11(pin)
-        elif sensor_type == 22:
-            self.sensor = DHT22(pin)
+        elif self.sensor_type == 11:
+            self.sensor = DHT11(self.pin)
+        elif self.sensor_type == 22:
+            self.sensor = DHT22(self.pin)
 
     def get_reading(self):
         readings = self.sensor.read()
