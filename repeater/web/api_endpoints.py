@@ -37,6 +37,9 @@ logger = logging.getLogger("HTTPServer")
 # POST   /api/restart_service - Restart the repeater service
 # GET    /api/openapi - Get OpenAPI specification
 
+# Sensors
+# GET    /api/dhtxx_sensor - Get DHTxx sensor reading (temperature & humidity)
+
 # Repeater Control
 # POST   /api/send_advert - Send repeater advertisement
 # POST   /api/set_mode {"mode": "forward|monitor"} - Set repeater mode
@@ -1794,6 +1797,33 @@ class APIEndpoints:
         except Exception as e:
             logger.error(f"Error pinging neighbor: {e}", exc_info=True)
             return self._error(str(e))
+
+    # ============================================================================
+    # SENSOR ENDPOINTS
+    # ============================================================================
+
+    @cherrypy.expose
+    @cherrypy.tools.json_out()
+    def dhtxx_sensor(self):
+        """Get DHTxx sensor readings if available"""
+        try:
+            #get DHTxx sensor readings from storage collector
+            storage = self._get_storage()
+            if storage:
+                dht_reading = storage.get_dhtxx_reading()
+                if dht_reading:
+                    return self._success(dht_reading)
+                else:
+                    return self._error(
+                        "DHTxx sensor reading not available (sensor may not be configured or adafruit_dht library may not be installed)"
+                    )
+            else:
+                return self._error("Storage collector not available")
+        except Exception as e:
+            logger.error(f"Error getting DHTxx sensor reading: {e}")
+            return self._error(e)
+
+
 
     # ========== Identity Management Endpoints ==========
     

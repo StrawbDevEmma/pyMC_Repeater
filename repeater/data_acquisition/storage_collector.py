@@ -67,6 +67,18 @@ class StorageCollector:
         self.hardware_stats = HardwareStatsCollector()
         logger.info("Hardware stats collector initialized")
         
+        # Initialize DHTxx sensor collector if configured
+        self.dhtxx_sensor = None
+        if "dhtxx_sensor" in config:
+            try:
+                from .dhtxx_sensor import DHTxxSensorCollector
+
+                self.dhtxx_sensor = DHTxxSensorCollector(config.get("dhtxx_sensor", {}))
+                logger.info("DHTxx sensor collector initialized")
+            except Exception as e:
+                logger.error(f"Failed to initialize DHTxx sensor collector: {e}")
+                self.dhtxx_sensor = None
+
         # Initialize WebSocket handler for real-time updates
         self.websocket_available = False
         try:
@@ -338,4 +350,15 @@ class StorageCollector:
             return self.hardware_stats.get_processes_summary()
         except Exception as e:
             logger.error(f"Error getting hardware processes: {e}")
+            return None
+    def get_dhtxx_reading(self) -> Optional[dict]:
+        """Get current reading from DHTxx sensor if configured"""
+        if not self.dhtxx_sensor:
+            logger.debug("DHTxx sensor not configured")
+            return None
+
+        try:
+            return self.dhtxx_sensor.get_reading()
+        except Exception as e:
+            logger.error(f"Error getting DHTxx sensor reading: {e}")
             return None
