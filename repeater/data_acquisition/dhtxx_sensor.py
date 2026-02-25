@@ -14,6 +14,7 @@ logger = logging.getLogger("DHTxxSensor")
 class DHTxxSensorCollector:
 
     def __init__(self, dht_config: dict):
+        self.dht_config = dht_config
         self.sensor_type = dht_config.get("type")
         self.pin = dht_config.get("pin") 
         self.sensor = None
