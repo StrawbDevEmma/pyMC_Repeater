@@ -607,12 +607,9 @@ paths:
                     data:
                       type: object
                       properties:
-                        temp_c:
+                        temperature:
                           type: integer
                           description: Temperature in Celsius
-                        temp_f:
-                          type: float
-                          description: Temperature in Fahrenheit
                         humidity:
                           type: integer
                           description: Relative humidity percentage
